@@ -1,0 +1,55 @@
+<html>
+<head>
+  <title>weFurnish | Users</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <style>
+    table, th, td {
+      border: 1px solid black;
+      border-collapse:collapse;
+    }
+    th, td {
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>USERS</h1>
+    <button class="btn btn-dark" type="button" onclick="loadXMLDoc()">Show</button>
+    <br><br>
+    <table id="table"></table>
+  </div>
+  
+  <script>
+  function loadXMLDoc() {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        myFunction(this);
+      }
+    };
+    xmlhttp.open("GET", "data.xml", true);
+    xmlhttp.send();
+  }
+  function myFunction(xml) {
+    var i;
+    var xmlDoc = xml.responseXML;
+    var table="<tr><th>USERNAME</th><th>GENDER</th><th>EMAIL</th><th>MOBILE NUMBER</th></tr>";
+    var x = xmlDoc.getElementsByTagName("user");
+    for (i = 0; i <x.length; i++) {
+      table += "<tr><td>" +
+      x[i].getElementsByTagName("username")[0].childNodes[0].nodeValue +
+      "</td><td>" +
+      x[i].getElementsByTagName("gender")[0].childNodes[0].nodeValue +
+      "</td><td>" + 
+      x[i].getElementsByTagName("email")[0].childNodes[0].nodeValue +
+      "</td><td>" + 
+      x[i].getElementsByTagName("mobile")[0].childNodes[0].nodeValue +
+      "</td></tr>";
+    }
+    document.getElementById("table").innerHTML = table;
+  }
+  </script>
+
+</body>
+</html>
